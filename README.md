@@ -6,7 +6,7 @@ This phase is about getting the API and data model right before adding persisten
 
 ## Why I’m Building This
 
-During an AI Transformation internship I built several enterprise agents that all did variations of the same thing: take a document, apply instructions (and sometimes reference material), then return a structured result. Contracts, policies, and resumes look different on the surface, but the pipeline is similar: ingest → instruct or retrieve → evaluate or transform → structured output.
+During my previous internship in the AI Transformation Experience team at Maximus, I built several enterprise agents that all did variations of the same thing: take a document, apply instructions (and sometimes reference material), then return a structured result. Contracts, policies, and resumes look different on the surface, but the pipeline is similar: ingest → instruct or retrieve → evaluate or transform → structured output.
 
 Building a separate agent for each use case repeats that plumbing. This project is an attempt to extract the shared engine—starting with a typed API that can later host extract, summarize, retrieve, compare, evaluate, and generate steps.
 
