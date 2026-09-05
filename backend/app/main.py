@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 from app.models.document import DocumentCreate, DocumentResponse
 from app.models.run import RunCreate, RunResponse
 from app.models.workflow import WorkflowCreate, WorkflowResponse
+from app.services.workflow_executor import execute_workflow
 
 app = FastAPI(
     title="AI Workflow Studio API",
@@ -103,13 +104,7 @@ def create_run(payload: RunCreate):
         document_id=payload.document_id,
         workflow_id=payload.workflow_id,
         status="completed",
-        result={
-            "summary": f"Mock summary of '{document.name}' using '{workflow.name}'.",
-            "key_points": [
-                workflow.instruction,
-                f"Processed document: {document.name}",
-            ],
-        },
+        result=execute_workflow(document.content, workflow.instruction),
     )
     runs.append(run)
     _next_run_id += 1
