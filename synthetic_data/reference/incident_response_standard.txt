@@ -1,0 +1,44 @@
+Northstar Technologies
+Incident Response Standard
+Document ID: NST-SEC-IR-001
+Classification: Internal
+Owner: Security Operations
+Version: 1.0
+
+1. Purpose
+
+This standard defines how Northstar Technologies reports, classifies, discloses, and reviews security incidents. Fast reporting protects customers and limits dwell time. After-action reviews exist so the same failure is less likely to repeat.
+
+2. Scope
+
+This standard applies to confirmed and suspected events affecting confidentiality, integrity, or availability of Northstar systems or data. It includes malware, account takeover, lost devices containing Confidential data, production misconfiguration, and privacy incidents involving customer personal data.
+
+3. Requirements
+
+IR-01 One-hour reporting to the Security Operations Center
+Security incidents must be reported to the Security Operations Center (SOC) within one hour of detection.
+Detection means the point at which a workforce member, monitoring alert, or vendor first has a reasonable basis to believe a security incident may be occurring. Reporting “by the next business day,” or only after a manager reviews the event, does not meet this requirement. This timeline applies to all suspected security incidents, not only high-severity events.
+
+IR-02 Severity classification within two hours
+A documented incident severity classification (Sev 1 through Sev 4) must be applied to every incident within two hours of the report to the SOC.
+Sev 1: active customer data exposure or widespread production outage caused by a security event.
+Sev 2: significant security impact with a credible path to customer harm or material downtime.
+Sev 3: limited impact, contained, no evidence of customer data exposure.
+Sev 4: suspected event later confirmed as a false positive or negligible risk.
+Leaving severity blank overnight, or using informal labels such as “pretty bad,” does not meet this requirement. Severity may later be upgraded or downgraded with a timestamped note.
+
+IR-03 Seventy-two-hour customer notification
+Customers must be notified of a confirmed confidentiality breach involving their personal data within 72 hours of confirmation.
+Confirmation is the documented decision that unauthorized access to or disclosure of that customer’s personal data occurred. “Notify in a timely manner” without a 72-hour clock does not meet this requirement. Legal hold or law-enforcement delay requires CISO and counsel approval and must be recorded.
+
+IR-04 After-action reviews for Sev 1 and Sev 2
+After-action reviews must be completed within 10 business days of incident closure for Sev 1 and Sev 2 incidents.
+The review must record root cause, timeline, what worked, and assigned follow-up owners. Optional lessons-learned meetings “as time allows,” or reviews only for Sev 1, do not meet this requirement. Sev 3 and Sev 4 reviews are encouraged but not required by this standard.
+
+4. Related controls
+
+Investigations will often need database access logs from the Data Protection Standard and authentication lockout data from the Authentication Standard. Privileged account misuse is also an access-control issue; reporting still follows IR-01 even when the Access Control Standard is the long-term fix.
+
+5. Exceptions and review
+
+This standard is reviewed at least annually or after any Sev 1 incident.

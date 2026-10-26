@@ -1,0 +1,46 @@
+Northstar Technologies
+Access Control Standard
+Document ID: NST-SEC-AC-001
+Classification: Internal
+Owner: Information Security
+Version: 1.0
+
+1. Purpose
+
+This standard defines how Northstar Technologies grants, reviews, and removes access to company systems. It applies to employees, contractors, and any other identity that can log in to Northstar applications, infrastructure, or administrative tools.
+
+Access control at Northstar is based on unique identities, least privilege, and timely removal of access that is no longer required. The requirements below are mandatory unless a written exception is approved by the Chief Information Security Officer (CISO).
+
+2. Scope
+
+This standard covers operating system accounts, directory accounts, application roles, cloud consoles, and privileged or break-glass identities. It does not replace the Authentication Standard, but it does overlap with it where privileged login protections are concerned.
+
+3. Requirements
+
+AC-01 Privileged multi-factor authentication
+Privileged user accounts must use multi-factor authentication.
+Privileged accounts include domain administrators, cloud tenant administrators, database administrators, security tool administrators, and any account that can change security settings or access production data without an application-level approval workflow. Password-only login is not acceptable for these accounts, including when connecting from the corporate network.
+
+AC-02 Quarterly access reviews
+User access must be reviewed at least quarterly.
+Each system owner must confirm that every active account still has a valid business need and that assigned roles remain the minimum required. Reviews must cover standard users and privileged users. Completing a review only for administrators, or only once per year, does not meet this requirement.
+
+AC-03 Termination access revocation
+Access must be revoked within 24 hours of employment termination.
+The 24-hour clock starts when Human Resources records the worker as terminated or when a contractor engagement officially ends, whichever is earlier. Revocation includes directory login, VPN, email, source control, cloud consoles, and production application roles. Disabling an account at the next monthly cleanup cycle is not sufficient.
+
+AC-04 Privileged access approval
+Privileged access must be granted only through a documented approval process that includes both the requestor’s manager and a security owner.
+The security owner is the Information Security team or a named application security owner. Approvals must be recorded before the privilege is provisioned. Informal chat approval, after-the-fact justification, or manager-only approval does not satisfy this requirement.
+
+AC-05 Unique interactive identities
+Each person must use a unique user identifier for interactive login. Shared or generic accounts are prohibited for interactive use.
+Service accounts used only by applications are permitted if they cannot be used for interactive login and are inventoried. Emergency break-glass accounts, if they exist, must still be attributed to a named individual when used and must not be a standing shared password used by a team.
+
+4. Related controls
+
+Privileged MFA in AC-01 is related to, but not the same as, remote-access MFA in the Authentication Standard. Quarterly reviews in AC-02 are related to termination handling in AC-03: a review finds stale access; termination should already have removed it. Logging of privileged activity may also appear in the Data Protection Standard; that logging does not replace the approval and uniqueness rules in this document.
+
+5. Exceptions and review
+
+Exceptions must be time-bounded, documented, and approved by the CISO. This standard is reviewed at least annually.

@@ -1,0 +1,57 @@
+Northstar Technologies
+Information Security Policy
+Version: 2.0
+Effective: 12 January 2026
+Owner: Chief Information Security Officer
+Classification: Internal
+Supersedes: Version 1.0 (4 March 2024)
+
+1. Introduction
+
+Northstar Technologies (“Northstar”) builds analytics software for mid-market customers. This Information Security Policy describes mandatory controls for workforce access, authentication, data protection, and incident handling. All employees and contractors who use Northstar systems must follow it. Product-specific customer login experiences are out of scope except where they store or process customer personal data on Northstar infrastructure.
+
+2. Identities and access
+
+Every person who logs in interactively must have a unique user identifier. Shared or generic accounts are prohibited for interactive use. Non-interactive service accounts are permitted if they cannot be used for human login and are recorded in the identity inventory.
+
+Privileged access — including domain administration, cloud tenant administration, production database administration, and security-tool administration — must be requested in writing. The requestor’s manager and a security owner (Information Security or a named application security owner) must both approve the request before the privilege is provisioned. Privileged users must authenticate with multi-factor authentication; password-only privileged login is prohibited.
+
+All remote access to corporate systems, including VPN, zero-trust access brokers, and cloud consoles used from outside a Northstar office, requires multi-factor authentication.
+
+System owners must review user access at least quarterly, including both standard and privileged roles, and remove access that no longer has a business need.
+
+When Human Resources records a termination, or when a contractor engagement ends, IT must revoke directory, VPN, email, source control, cloud console, and production application access within twenty-four (24) hours.
+
+3. Passwords, lockout, and sessions
+
+Passwords must be at least twelve (12) characters. Users should prefer passphrases. Identity and Access Management is encouraged to check new passwords against known-breach datasets when the identity platform makes that check available; the check is recommended, not mandatory, in this version of the policy.
+
+Reuse of any of a user’s last twelve (12) passwords is prohibited, and the identity system must enforce that history check at password change.
+
+After five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed.
+
+Privileged sessions must time out after fifteen (15) minutes of inactivity. Standard user sessions must time out after thirty (30) minutes of inactivity. Timeout must require re-authentication; a device screensaver alone is not sufficient for cloud consoles or web applications.
+
+4. Protecting data
+
+Northstar classifies information as Public, Internal, Confidential, or Restricted. Customer personal data is Restricted.
+
+Confidential and Restricted data at rest — including servers, databases, and object storage, not only laptops — must be encrypted using AES-256 or another algorithm approved in writing by Information Security. Encryption keys must not be stored in plaintext beside the data they protect.
+
+Confidential data transmitted over public networks must use TLS 1.2 or higher.
+
+Backups that contain Confidential data must be encrypted and stored offsite or in a geographically separate region from the primary production copy.
+
+5. Detecting and handling incidents
+
+Sev 1 security incidents must be reported to the Security Operations Center within one hour of detection. All other suspected security incidents must be reported by the next business day.
+
+The SOC must assign a documented severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of the report.
+
+If Northstar confirms a confidentiality breach involving a customer’s personal data, that customer must be notified within seventy-two (72) hours of confirmation, unless counsel and the CISO record a legally required delay.
+
+After-action reviews are required for Sev 1 incidents and must be completed within ten (10) business days of closure. After-action reviews for Sev 2 incidents are encouraged. Reviews should capture root cause and follow-up owners when they are performed.
+
+6. Policy administration
+
+This policy is reviewed at least annually and after any Sev 1 incident. Exceptions require time-bounded CISO approval. Questions should be sent to security@northstar.example.

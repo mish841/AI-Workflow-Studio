@@ -1,0 +1,41 @@
+Northstar Technologies
+Data Protection Standard
+Document ID: NST-SEC-DP-001
+Classification: Internal
+Owner: Data Protection Office / Information Security
+Version: 1.0
+
+1. Purpose
+
+This standard defines how Northstar Technologies protects Confidential and Restricted information at rest, in transit, in backups, and in production database access logs. Customer personal data used in Northstar products is treated as Restricted unless a data-protection assessment assigns a lower classification.
+
+2. Classification used in this standard
+
+Confidential: internal information that would harm Northstar if disclosed (for example, unreleased financials, detailed architecture).
+Restricted: customer personal data, authentication secrets, and similarly sensitive regulated data.
+
+3. Requirements
+
+DP-01 Encryption at rest
+Data classified as Confidential or Restricted must be encrypted at rest using AES-256 or an equivalent algorithm approved by Information Security.
+Full-disk encryption, database transparent encryption, or object-storage server-side encryption meets this requirement when the algorithm is AES-256 or equivalent and keys are not stored in the same location as the ciphertext in plaintext form. Stating that encryption should be used “where practical,” or encrypting only laptops, does not meet this requirement for Confidential or Restricted data in servers, databases, and object storage.
+
+DP-02 Encryption in transit
+Confidential data transmitted over public networks must use TLS 1.2 or higher.
+Public networks include the internet and any path that leaves a Northstar-controlled data center or cloud VPC. TLS 1.0 or 1.1 is not acceptable. This requirement is related to remote access in the Authentication Standard: an encrypted VPN does not remove the need for TLS 1.2 or higher on application traffic that still crosses a public network.
+
+DP-03 Production database access logging
+Production databases that contain customer personal data must log query and access activity, and those logs must be retained for at least 12 months.
+Logs must identify the authenticated principal (or service account), timestamp, and object or query sufficient to support an investigation. Infrastructure or firewall logs alone do not meet this requirement. This logging is related to privileged access in the Access Control Standard and to incident investigation in the Incident Response Standard; neither of those documents sets the 12-month retention period.
+
+DP-04 Encrypted geographically separated backups
+Backup media containing Confidential data must be encrypted and stored offsite or in a geographically separate region.
+“Geographically separate” means a different metropolitan region or cloud region from the primary copy. Unencrypted tapes or snapshots stored in the same building as production do not meet this requirement. Encryption of backups is related to DP-01 but is independently required even when production storage is already encrypted.
+
+4. Related controls
+
+Access to decryption keys is privileged access and must follow the Access Control Standard. Lost backup media or suspected ciphertext exfiltration must be handled under the Incident Response Standard. Authentication logs required by the Authentication Standard (failed logins, lockouts) are not a substitute for database query logs in DP-03.
+
+5. Exceptions and review
+
+Algorithm exceptions require Information Security approval and a documented compensating control. This standard is reviewed at least annually.

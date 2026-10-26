@@ -1,0 +1,186 @@
+{
+  "security_policy_v1": {
+    "AC-01": {
+      "expected_status": "satisfied",
+      "reason": "The policy requires multi-factor authentication for privileged users and forbids password-only privileged access.",
+      "expected_evidence": "Privileged users must sign in with multi-factor authentication. Password-only privileged access is not permitted."
+    },
+    "AC-02": {
+      "expected_status": "partial",
+      "reason": "The policy requires access reviews, but only at least once per year, not at least quarterly, and it assigns reviews to managers rather than requiring system-owner reviews of all roles on a quarterly cadence.",
+      "expected_evidence": "Managers should review the access of people on their teams at least once per year and remove access that is no longer needed."
+    },
+    "AC-03": {
+      "expected_status": "contradicted",
+      "reason": "The policy allows up to 30 days to disable accounts after the last day of employment, which exceeds the 24-hour revocation window.",
+      "expected_evidence": "IT will disable the person’s accounts within thirty (30) days of the last day of employment or contract."
+    },
+    "AC-04": {
+      "expected_status": "satisfied",
+      "reason": "Privileged access requires documented dual approval from the manager and Information Security before provisioning.",
+      "expected_evidence": "The requestor’s manager and the Information Security team must both approve the request before the privilege is turned on."
+    },
+    "AC-05": {
+      "expected_status": "satisfied",
+      "reason": "The policy requires unique user identifiers and prohibits shared interactive logins, while allowing non-interactive service accounts.",
+      "expected_evidence": "Every person who logs in to Northstar systems must have a unique user identifier. Shared logins for day-to-day interactive use are not allowed."
+    },
+    "AUTH-01": {
+      "expected_status": "satisfied",
+      "reason": "Multi-factor authentication is required for remote access, including VPN and cloud administration portals used from outside a Northstar office.",
+      "expected_evidence": "Remote access to the corporate network, including VPN and Northstar’s cloud administration portals from outside a Northstar office, also requires multi-factor authentication."
+    },
+    "AUTH-02": {
+      "expected_status": "partial",
+      "reason": "A password minimum exists, but it is 8 characters rather than 14, and there is no check against known-breach password lists.",
+      "expected_evidence": "User passwords must be at least eight (8) characters and should include a mix of letters and numbers."
+    },
+    "AUTH-03": {
+      "expected_status": "satisfied",
+      "reason": "Accounts lock after five consecutive failed attempts, with unlock by IAM or a cool-down of at least 15 minutes.",
+      "expected_evidence": "After five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed."
+    },
+    "AUTH-04": {
+      "expected_status": "partial",
+      "reason": "The policy mentions session lifetime only to defer it to product owners and mentions laptop screen locks, which the Authentication Standard says do not satisfy the 15-minute privileged / 30-minute standard idle timeout.",
+      "expected_evidence": "Laptop screen locks are required when staff step away from their desks. Application and console session lifetimes are left to product and infrastructure owners."
+    },
+    "AUTH-05": {
+      "expected_status": "missing",
+      "reason": "The policy has no password-history or reuse-prevention language.",
+      "expected_evidence": null
+    },
+    "DP-01": {
+      "expected_status": "partial",
+      "reason": "Encryption at rest is encouraged 'where practical' and emphasized for laptops, but AES-256 (or equivalent) is not required for Confidential or Restricted data on servers, databases, and object storage.",
+      "expected_evidence": "Encryption of data at rest should be used where practical, especially on company laptops. Server and database encryption is encouraged when it does not interfere with operations."
+    },
+    "DP-02": {
+      "expected_status": "satisfied",
+      "reason": "TLS 1.2 or higher is required for data sent over the internet or other public networks.",
+      "expected_evidence": "Data sent over the internet or other public networks must be protected with TLS 1.2 or higher."
+    },
+    "DP-03": {
+      "expected_status": "missing",
+      "reason": "The policy does not mention production database query or access logging, nor 12-month retention of those logs.",
+      "expected_evidence": null
+    },
+    "DP-04": {
+      "expected_status": "satisfied",
+      "reason": "Confidential backups must be encrypted and stored in a geographically separate region or facility.",
+      "expected_evidence": "Backups of Confidential information must be encrypted. A copy of those backups must be stored in a cloud region or facility that is geographically separate from the primary production environment."
+    },
+    "IR-01": {
+      "expected_status": "contradicted",
+      "reason": "Incidents may be reported by the next business day, which is later than the one-hour SOC reporting requirement for all detections.",
+      "expected_evidence": "Anyone who believes a security incident may be occurring must notify the Security Operations Center by the next business day."
+    },
+    "IR-02": {
+      "expected_status": "satisfied",
+      "reason": "Sev 1–4 must be assigned within two hours of the SOC receiving the report.",
+      "expected_evidence": "The SOC will assign a severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of receiving the report."
+    },
+    "IR-03": {
+      "expected_status": "partial",
+      "reason": "Customer notification is required after a confirmed personal-data confidentiality breach, but only 'as soon as practicable,' not within 72 hours of confirmation.",
+      "expected_evidence": "If Northstar confirms that a customer’s personal data was involved in a confidentiality breach, Customer Success and Legal will notify that customer as soon as practicable."
+    },
+    "IR-04": {
+      "expected_status": "missing",
+      "reason": "The policy does not require after-action reviews for Sev 1 or Sev 2 incidents or set a 10-business-day completion window.",
+      "expected_evidence": null
+    }
+  },
+  "security_policy_v2": {
+    "AC-01": {
+      "expected_status": "satisfied",
+      "reason": "Privileged users must use multi-factor authentication; password-only privileged login is prohibited.",
+      "expected_evidence": "Privileged users must authenticate with multi-factor authentication; password-only privileged login is prohibited."
+    },
+    "AC-02": {
+      "expected_status": "satisfied",
+      "reason": "System owners must review standard and privileged access at least quarterly.",
+      "expected_evidence": "System owners must review user access at least quarterly, including both standard and privileged roles, and remove access that no longer has a business need."
+    },
+    "AC-03": {
+      "expected_status": "satisfied",
+      "reason": "Access across directory, VPN, email, source control, cloud consoles, and production applications must be revoked within 24 hours of termination.",
+      "expected_evidence": "IT must revoke directory, VPN, email, source control, cloud console, and production application access within twenty-four (24) hours."
+    },
+    "AC-04": {
+      "expected_status": "satisfied",
+      "reason": "Privileged access still requires manager and security-owner approval before provisioning.",
+      "expected_evidence": "The requestor’s manager and a security owner (Information Security or a named application security owner) must both approve the request before the privilege is provisioned."
+    },
+    "AC-05": {
+      "expected_status": "satisfied",
+      "reason": "Interactive logins must use unique identifiers; shared or generic interactive accounts are prohibited.",
+      "expected_evidence": "Every person who logs in interactively must have a unique user identifier. Shared or generic accounts are prohibited for interactive use."
+    },
+    "AUTH-01": {
+      "expected_status": "satisfied",
+      "reason": "MFA is required for all listed remote access paths, including VPN, zero-trust brokers, and off-site cloud consoles.",
+      "expected_evidence": "All remote access to corporate systems, including VPN, zero-trust access brokers, and cloud consoles used from outside a Northstar office, requires multi-factor authentication."
+    },
+    "AUTH-02": {
+      "expected_status": "partial",
+      "reason": "The minimum length increased to 12 characters, which is still below 14, and breach-list screening is only recommended when available, not required.",
+      "expected_evidence": "Passwords must be at least twelve (12) characters. Users should prefer passphrases. Identity and Access Management is encouraged to check new passwords against known-breach datasets when the identity platform makes that check available; the check is recommended, not mandatory, in this version of the policy."
+    },
+    "AUTH-03": {
+      "expected_status": "satisfied",
+      "reason": "Lockout after five consecutive failures is unchanged and still matches the standard.",
+      "expected_evidence": "After five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed."
+    },
+    "AUTH-04": {
+      "expected_status": "satisfied",
+      "reason": "Idle timeouts are 15 minutes for privileged sessions and 30 minutes for standard sessions, with re-authentication required.",
+      "expected_evidence": "Privileged sessions must time out after fifteen (15) minutes of inactivity. Standard user sessions must time out after thirty (30) minutes of inactivity."
+    },
+    "AUTH-05": {
+      "expected_status": "satisfied",
+      "reason": "Reuse of the last 12 passwords is prohibited and must be enforced by the identity system.",
+      "expected_evidence": "Reuse of any of a user’s last twelve (12) passwords is prohibited, and the identity system must enforce that history check at password change."
+    },
+    "DP-01": {
+      "expected_status": "satisfied",
+      "reason": "Confidential and Restricted data at rest on servers, databases, and object storage must use AES-256 or an Information Security-approved equivalent.",
+      "expected_evidence": "Confidential and Restricted data at rest — including servers, databases, and object storage, not only laptops — must be encrypted using AES-256 or another algorithm approved in writing by Information Security."
+    },
+    "DP-02": {
+      "expected_status": "satisfied",
+      "reason": "TLS 1.2 or higher remains required for Confidential data on public networks.",
+      "expected_evidence": "Confidential data transmitted over public networks must use TLS 1.2 or higher."
+    },
+    "DP-03": {
+      "expected_status": "missing",
+      "reason": "The policy still does not require query/access logging of production databases that contain customer personal data, or 12-month retention of those logs.",
+      "expected_evidence": null
+    },
+    "DP-04": {
+      "expected_status": "satisfied",
+      "reason": "Confidential backups must be encrypted and stored offsite or in a geographically separate region.",
+      "expected_evidence": "Backups that contain Confidential data must be encrypted and stored offsite or in a geographically separate region from the primary production copy."
+    },
+    "IR-01": {
+      "expected_status": "contradicted",
+      "reason": "Only Sev 1 incidents must be reported within one hour; all other suspected incidents may wait until the next business day, which contradicts the one-hour rule for every detection.",
+      "expected_evidence": "Sev 1 security incidents must be reported to the Security Operations Center within one hour of detection. All other suspected security incidents must be reported by the next business day."
+    },
+    "IR-02": {
+      "expected_status": "satisfied",
+      "reason": "Documented Sev 1–4 classification is still required within two hours of the report.",
+      "expected_evidence": "The SOC must assign a documented severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of the report."
+    },
+    "IR-03": {
+      "expected_status": "satisfied",
+      "reason": "Confirmed confidentiality breaches involving a customer’s personal data require notification within 72 hours of confirmation, with a recorded legal delay exception.",
+      "expected_evidence": "If Northstar confirms a confidentiality breach involving a customer’s personal data, that customer must be notified within seventy-two (72) hours of confirmation, unless counsel and the CISO record a legally required delay."
+    },
+    "IR-04": {
+      "expected_status": "partial",
+      "reason": "After-action reviews are mandatory for Sev 1 within 10 business days, but only encouraged for Sev 2, so the Sev 2 half of the requirement is not met.",
+      "expected_evidence": "After-action reviews are required for Sev 1 incidents and must be completed within ten (10) business days of closure. After-action reviews for Sev 2 incidents are encouraged."
+    }
+  }
+}

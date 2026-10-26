@@ -1,0 +1,44 @@
+Northstar Technologies
+Authentication Standard
+Document ID: NST-SEC-AUTH-001
+Classification: Internal
+Owner: Identity and Access Management
+Version: 1.0
+
+1. Purpose
+
+This standard defines how users prove their identity when accessing Northstar Technologies systems. It covers remote access, password quality, account lockout, session lifetime, and password reuse. The goal is to reduce credential theft and limit the window in which a stolen password can be used.
+
+2. Scope
+
+This standard applies to workforce identities used for corporate applications, VPN, cloud consoles, and administrative interfaces. Customer-facing product login may follow a separate product standard; workforce access may not opt out of the requirements below.
+
+3. Requirements
+
+AUTH-01 Remote access multi-factor authentication
+All remote access to corporate systems must require multi-factor authentication.
+Remote access includes VPN, reverse proxies, cloud consoles reached from outside the office, and any split-tunnel or zero-trust access broker. MFA that applies only to VPN, while other remote paths remain password-only, does not meet this requirement. This control is related to privileged MFA in the Access Control Standard: privileged accounts always need MFA, and remote access needs MFA even for non-privileged users.
+
+AUTH-02 Password length and compromised-password screening
+Passwords must be at least 14 characters and must not be a password that has appeared in a known breach list.
+Northstar must check new and changed passwords against a current compromised-password dataset (for example, a vendor-provided breach corpus or equivalent). Complexity rules such as “one uppercase letter” do not replace the 14-character minimum. Allowing shorter passwords for legacy systems, without a CISO exception, does not meet this requirement.
+
+AUTH-03 Failed-attempt lockout
+An account must be locked after five consecutive failed login attempts.
+Lockout applies to directory, VPN, and applications that use Northstar single sign-on. Temporary lockout of at least 15 minutes, or until an administrator or automated identity workflow unlocks the account, is required. A warning message without lockout, or lockout only after ten failures, does not meet this requirement.
+
+AUTH-04 Idle session timeout
+Privileged sessions must time out after 15 minutes of inactivity. Standard user sessions must time out after 30 minutes of inactivity.
+Timeout must end the session or require re-authentication. Screensaver locks on laptops do not satisfy this requirement for server consoles, cloud consoles, or web applications. This requirement is related to privileged access in the Access Control Standard: the stricter 15-minute timer applies whenever the session is privileged, even if the user originally authenticated with MFA.
+
+AUTH-05 Password history
+Reuse of the last 12 passwords is prohibited.
+The identity system must reject a password change that matches any of the user’s previous 12 passwords. Advising users “not to reuse passwords” without technical enforcement does not meet this requirement.
+
+4. Related controls
+
+Authentication failures and lockouts should be visible to operations staff. Detailed query logs for production databases that hold customer personal data are specified in the Data Protection Standard; those logs are not a substitute for lockout and timeout. Incident response may treat repeated lockouts as a security event; reporting timelines are defined in the Incident Response Standard.
+
+5. Exceptions and review
+
+Protocol constraints that prevent 14-character passwords require a documented, time-bounded CISO exception and a compensating control. This standard is reviewed at least annually.

@@ -1,0 +1,48 @@
+Northstar Technologies
+Information Security Policy
+Version: 1.0
+Effective: 4 March 2024
+Owner: Chief Information Security Officer
+Classification: Internal
+
+1. Introduction
+
+Northstar Technologies (“Northstar”) builds analytics software for mid-market customers. This Information Security Policy describes how we protect company and customer information. All employees and contractors who use Northstar systems are expected to follow it. Related procedures may be published by Information Security; where this policy is silent, teams should use reasonable professional judgment and escalate questions to the CISO.
+
+2. Identities and access
+
+Every person who logs in to Northstar systems must have a unique user identifier. Shared logins for day-to-day interactive use are not allowed. Application service accounts may exist where a system, not a person, needs to authenticate, provided those accounts are not used as a shared team password.
+
+Privileged access — including domain administration, cloud tenant administration, and production database administration — must be requested in writing. The requestor’s manager and the Information Security team must both approve the request before the privilege is turned on. Privileged users must sign in with multi-factor authentication. Password-only privileged access is not permitted.
+
+Remote access to the corporate network, including VPN and Northstar’s cloud administration portals from outside a Northstar office, also requires multi-factor authentication.
+
+Managers should review the access of people on their teams at least once per year and remove access that is no longer needed. When someone leaves Northstar, Human Resources will notify IT, and IT will disable the person’s accounts within thirty (30) days of the last day of employment or contract.
+
+3. Passwords and login protection
+
+User passwords must be at least eight (8) characters and should include a mix of letters and numbers. Users are encouraged to choose memorable phrases rather than simple dictionary words.
+
+After five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed.
+
+Laptop screen locks are required when staff step away from their desks. Application and console session lifetimes are left to product and infrastructure owners.
+
+4. Protecting data
+
+Northstar classifies information as Public, Internal, Confidential, or Restricted. Customer personal data is treated as Restricted.
+
+Data sent over the internet or other public networks must be protected with TLS 1.2 or higher. Internal tools that still speak older TLS versions must be upgraded or isolated.
+
+Encryption of data at rest should be used where practical, especially on company laptops. Server and database encryption is encouraged when it does not interfere with operations.
+
+Backups of Confidential information must be encrypted. A copy of those backups must be stored in a cloud region or facility that is geographically separate from the primary production environment.
+
+5. Detecting and handling incidents
+
+Anyone who believes a security incident may be occurring must notify the Security Operations Center by the next business day. The SOC will assign a severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of receiving the report.
+
+If Northstar confirms that a customer’s personal data was involved in a confidentiality breach, Customer Success and Legal will notify that customer as soon as practicable.
+
+6. Policy administration
+
+This policy is reviewed at least annually. Exceptions require CISO approval. Questions should be sent to security@northstar.example.
