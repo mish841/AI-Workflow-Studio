@@ -1,0 +1,11 @@
+{
+  "project_id": "P-4421",
+  "name": "Northstar Customer Portal Refresh",
+  "sponsor": "Priya Raman",
+  "milestones": [
+    {"id": "M1", "title": "Discovery complete", "date": "2026-07-10", "status": "done"},
+    {"id": "M2", "title": "Design freeze", "date": "2026-08-21", "status": "done"},
+    {"id": "M3", "title": "UAT start", "date": null, "status": "planned"},
+    {"id": "M4", "title": "Production cutover", "date": "2026-12-04", "status": "planned"}
+  ]
+}

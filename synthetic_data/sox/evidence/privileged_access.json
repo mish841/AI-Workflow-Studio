@@ -1,0 +1,21 @@
+{
+  "period": "2026-Q3",
+  "grants": [
+    {
+      "ticket": "PRIV-441",
+      "user": "Jonah West",
+      "role": "Atlas IAM administrator",
+      "manager_approval": "2026-07-11",
+      "security_approval": "2026-07-11",
+      "mfa_enrolled": true
+    },
+    {
+      "ticket": "PRIV-458",
+      "user": "Elena Voss",
+      "role": "Harbor production deployer",
+      "manager_approval": "2026-08-03",
+      "security_approval": "2026-08-04",
+      "mfa_enrolled": true
+    }
+  ]
+}

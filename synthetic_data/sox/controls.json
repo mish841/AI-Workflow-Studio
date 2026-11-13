@@ -1,0 +1,117 @@
+{
+  "organization": "Northstar Technologies",
+  "period": "2026-Q3",
+  "period_start": "2026-07-01",
+  "period_end": "2026-09-30",
+  "disclaimer": "This is a synthetic IT general-controls review of fictional Northstar systems. It is not a SOX audit opinion.",
+  "required_evidence_files": [
+    "joiners.json",
+    "terminations.json",
+    "access_reviews.json",
+    "privileged_access.json",
+    "changes.json",
+    "deployments.json",
+    "sod_matrix.json",
+    "incidents.json"
+  ],
+  "controls": [
+    {
+      "id": "ITGC-01",
+      "title": "User access provisioning",
+      "category": "access",
+      "objective": "New workforce access is granted only after manager and IAM approval.",
+      "frequency": "Each joiner",
+      "owner": "Identity and Access Management",
+      "evidence_expected": ["joiners.json"]
+    },
+    {
+      "id": "ITGC-02",
+      "title": "User access termination",
+      "category": "access",
+      "objective": "Access is revoked within 24 hours of HR recording a termination.",
+      "frequency": "Each termination",
+      "owner": "Identity and Access Management",
+      "evidence_expected": ["terminations.json"]
+    },
+    {
+      "id": "ITGC-03",
+      "title": "Periodic access reviews",
+      "category": "access",
+      "objective": "System owners review all active accounts at least quarterly and record sign-off.",
+      "frequency": "Quarterly",
+      "owner": "System owners",
+      "evidence_expected": ["access_reviews.json"]
+    },
+    {
+      "id": "ITGC-04",
+      "title": "Privileged access",
+      "category": "access",
+      "objective": "Privileged roles require dual approval and MFA enrollment before use.",
+      "frequency": "Each privileged grant",
+      "owner": "Information Security",
+      "evidence_expected": ["privileged_access.json"]
+    },
+    {
+      "id": "ITGC-05",
+      "title": "Change approvals",
+      "category": "change",
+      "objective": "Production changes are approved by CAB or two independent approvers before implementation.",
+      "frequency": "Each production change",
+      "owner": "Change Advisory Board",
+      "evidence_expected": ["changes.json"]
+    },
+    {
+      "id": "ITGC-06",
+      "title": "Deployment authorization",
+      "category": "change",
+      "objective": "Production deployments reference an approved change ticket.",
+      "frequency": "Each production deploy",
+      "owner": "Release Engineering",
+      "evidence_expected": ["deployments.json", "changes.json"]
+    },
+    {
+      "id": "ITGC-07",
+      "title": "Production change documentation",
+      "category": "change",
+      "objective": "Each production change records implementation steps, backout, and post-implement evidence.",
+      "frequency": "Each production change",
+      "owner": "Application owners",
+      "evidence_expected": ["changes.json"]
+    },
+    {
+      "id": "ITGC-08",
+      "title": "Segregation of duties",
+      "category": "sod",
+      "objective": "The same person cannot develop a production change and approve it.",
+      "frequency": "Each production change",
+      "owner": "Internal Controls",
+      "evidence_expected": ["changes.json", "sod_matrix.json"]
+    },
+    {
+      "id": "ITGC-09",
+      "title": "Incident and exception tracking",
+      "category": "operations",
+      "objective": "Sev 1 and Sev 2 incidents are logged, and control exceptions have tickets.",
+      "frequency": "Each incident",
+      "owner": "Security Operations",
+      "evidence_expected": ["incidents.json"]
+    },
+    {
+      "id": "ITGC-10",
+      "title": "Evidence completeness",
+      "category": "evidence",
+      "objective": "The period evidence package contains every artifact named in the control catalog.",
+      "frequency": "Quarterly",
+      "owner": "Internal Controls",
+      "evidence_expected": ["joiners.json", "terminations.json", "access_reviews.json", "privileged_access.json", "changes.json", "deployments.json", "sod_matrix.json", "incidents.json"]
+    },
+    {
+      "id": "ITGC-11",
+      "title": "Emergency change follow-up",
+      "category": "change",
+      "objective": "Emergency production changes receive documented post-implementation approval within two business days.",
+      "owner": "Change Advisory Board",
+      "evidence_expected": ["changes.json"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "project_id": "P-4421",
+  "decisions": [
+    {
+      "id": "DEC-01",
+      "title": "Use Harbor hosted login rather than a custom IdP",
+      "approver": "Priya Raman",
+      "date": "2026-06-18"
+    },
+    {
+      "id": "DEC-03",
+      "title": "Defer mobile redesign to a later release",
+      "approver": null,
+      "date": "2026-09-09"
+    }
+  ]
+}

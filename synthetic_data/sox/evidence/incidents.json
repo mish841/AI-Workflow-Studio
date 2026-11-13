@@ -1,0 +1,19 @@
+{
+  "period": "2026-Q3",
+  "incidents": [
+    {
+      "id": "INC-1902",
+      "severity": "Sev 2",
+      "title": "Hub reporting delay",
+      "logged": "2026-08-14",
+      "exception_ticket": "EXC-77"
+    },
+    {
+      "id": "INC-1933",
+      "severity": "Sev 1",
+      "title": "Atlas IAM outage during month-end close",
+      "logged": "2026-09-16",
+      "exception_ticket": null
+    }
+  ]
+}

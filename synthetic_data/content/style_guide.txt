@@ -1,0 +1,17 @@
+Northstar Technologies
+Internal writing standard
+Document ID: NST-COM-001
+Owner: Communications
+Version: 1.0
+
+1. Required metadata
+Every official announcement must include Title, Audience, Owner, and Effective date in the header.
+
+2. Required sections
+The body must include these headings: Purpose, Guidance, and Contact.
+
+3. Prohibited terminology
+Do not use synergy, best-of-breed, or world-class. Prefer specific descriptions of the change.
+
+4. Audience
+Write for employees and contractors. Do not address customers directly in internal notices.

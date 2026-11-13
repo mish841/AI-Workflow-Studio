@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import os
+from typing import Optional
 
 from dotenv import load_dotenv
+from langchain_core.embeddings import Embeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain_postgres import PGVector
 from sqlalchemy import text
@@ -11,8 +13,10 @@ from app.database import DATABASE_URL, engine
 
 load_dotenv()
 
-COLLECTION_NAME = "compliance_requirements"
+REQUIREMENT_COLLECTION = "compliance_requirements"
+POLICY_COLLECTION = "policy_passages"
 EMBEDDING_MODEL = "text-embedding-3-small"
+EMBEDDING_DIMENSIONS = 1536
 
 
 def pgvector_connection_string() -> str:
@@ -39,20 +43,25 @@ def ensure_pgvector_extension() -> None:
         connection.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
 
 
-def get_embeddings() -> OpenAIEmbeddings:
+def get_embeddings() -> Embeddings:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY is not set.")
     return OpenAIEmbeddings(model=EMBEDDING_MODEL, api_key=api_key)
 
 
-def get_vector_store() -> PGVector:
+def get_vector_store(
+    collection_name: str = REQUIREMENT_COLLECTION,
+    embeddings: Optional[Embeddings] = None,
+    *,
+    pre_delete_collection: bool = False,
+) -> PGVector:
     ensure_pgvector_extension()
     return PGVector(
-        embeddings=get_embeddings(),
-        collection_name=COLLECTION_NAME,
+        embeddings=embeddings or get_embeddings(),
+        collection_name=collection_name,
         connection=pgvector_connection_string(),
         use_jsonb=True,
         create_extension=True,
-        pre_delete_collection=False,
+        pre_delete_collection=pre_delete_collection,
     )

@@ -1,0 +1,20 @@
+{
+  "period": "2026-Q3",
+  "records": [
+    {
+      "ticket": "IAM-2310",
+      "user": "Maya Chen",
+      "hr_termination": "2026-09-12T09:00:00",
+      "iam_disabled": "2026-09-18T16:40:00",
+      "systems_still_active": ["Atlas IAM"],
+      "note": "Disabled at the next weekly IAM cleanup rather than within 24 hours."
+    },
+    {
+      "ticket": "IAM-2288",
+      "user": "Noah Pell",
+      "hr_termination": "2026-08-01T17:00:00",
+      "iam_disabled": "2026-08-02T08:15:00",
+      "systems_still_active": []
+    }
+  ]
+}

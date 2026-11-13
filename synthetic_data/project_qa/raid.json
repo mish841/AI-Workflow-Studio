@@ -1,0 +1,38 @@
+{
+  "project_id": "P-4421",
+  "as_of": "2026-11-13",
+  "items": [
+    {
+      "id": "RISK-01",
+      "type": "risk",
+      "title": "Harbor SSO vendor delay",
+      "owner": "Eli Navarro",
+      "due": "2026-11-20",
+      "status": "open"
+    },
+    {
+      "id": "RISK-04",
+      "type": "risk",
+      "title": "Billing extract mapping incomplete",
+      "owner": null,
+      "due": "2026-11-07",
+      "status": "open"
+    },
+    {
+      "id": "ISSUE-02",
+      "type": "issue",
+      "title": "UAT environment missing customer fixtures",
+      "owner": "Sam Okonkwo",
+      "due": "2026-10-30",
+      "status": "open"
+    },
+    {
+      "id": "ISSUE-03",
+      "type": "issue",
+      "title": "Accessibility contrast failures on invoices",
+      "owner": "Riley Cho",
+      "due": "2026-11-21",
+      "status": "open"
+    }
+  ]
+}

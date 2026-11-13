@@ -1,0 +1,42 @@
+{
+  "period": "2026-Q3",
+  "changes": [
+    {
+      "id": "CHG-1012",
+      "title": "Hub invoice export timeout",
+      "developer": "Sam Okonkwo",
+      "approvers": ["Elena Voss", "Jonah West"],
+      "cab_approved": true,
+      "emergency": false,
+      "implementation_steps": true,
+      "backout_plan": true,
+      "post_implement_evidence": true,
+      "implemented": "2026-07-21"
+    },
+    {
+      "id": "CHG-1044",
+      "title": "Harbor runner image bump",
+      "developer": "Jordan Hale",
+      "approvers": ["Jordan Hale"],
+      "cab_approved": false,
+      "emergency": false,
+      "implementation_steps": true,
+      "backout_plan": false,
+      "post_implement_evidence": true,
+      "implemented": "2026-09-04"
+    },
+    {
+      "id": "CHG-1050",
+      "title": "Emergency Hub session store failover",
+      "developer": "Elena Voss",
+      "approvers": [],
+      "cab_approved": false,
+      "emergency": true,
+      "implementation_steps": true,
+      "backout_plan": true,
+      "post_implement_evidence": true,
+      "implemented": "2026-09-16",
+      "post_approval": null
+    }
+  ]
+}

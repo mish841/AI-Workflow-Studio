@@ -1,0 +1,35 @@
+{
+  "note": "Independently defined retrieval checks. These queries are not sent to the compliance evaluator as labels.",
+  "requirement_search": [
+    {
+      "id": "term-1",
+      "query": "employee termination access revocation",
+      "expected_requirement_ids": ["AC-03"]
+    },
+    {
+      "id": "term-2",
+      "query": "when a contractor engagement ends",
+      "expected_requirement_ids": ["AC-03"]
+    },
+    {
+      "id": "term-3",
+      "query": "revocation after employment termination",
+      "expected_requirement_ids": ["AC-03"]
+    },
+    {
+      "id": "mfa-1",
+      "query": "privileged users must use multi-factor authentication",
+      "expected_requirement_ids": ["AC-01"]
+    },
+    {
+      "id": "pwd-1",
+      "query": "minimum password length",
+      "expected_requirement_ids": ["AUTH-02"]
+    },
+    {
+      "id": "ir-1",
+      "query": "report a severity 1 security incident within one hour",
+      "expected_requirement_ids": ["IR-01"]
+    }
+  ]
+}

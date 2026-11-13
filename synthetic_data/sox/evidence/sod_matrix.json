@@ -1,0 +1,9 @@
+{
+  "period": "2026-Q3",
+  "prohibited": [
+    {
+      "id": "SOD-DEV-APPROVE",
+      "description": "A developer may not be the sole approver of their own production change."
+    }
+  ]
+}

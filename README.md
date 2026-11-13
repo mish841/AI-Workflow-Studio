@@ -1,222 +1,173 @@
 # AI Workflow Studio
 
-AI Workflow Studio is an in-progress backend for reusable AI document-processing workflows. The current MVP defines a small domain model—**Document**, **Workflow**, and **Run**—and exposes it as a FastAPI REST API.
+An AI-powered quality review platform for assessing organizational documents against defined standards and requirements.
 
-This phase is about getting the API and data model right before adding persistence, LLM calls, or retrieval.
+This repository is a working prototype. The demo company is **Northstar Technologies** — fictional — and every policy, control, and evidence file is synthetic. The product is inspired by real IT controls, compliance, and project-quality review work: reviewers still need to read source documents, judge them against a requirement set, and keep findings tied to evidence.
 
-## Why I’m Building This
+## Product overview
 
-During my previous internship in the AI Transformation Experience team at Maximus, I built several enterprise agents that all did variations of the same thing: take a document, apply instructions (and sometimes reference material), then return a structured result. Contracts, policies, and resumes look different on the surface, but the pipeline is similar: ingest → instruct or retrieve → evaluate or transform → structured output.
+Organizations review policies, control evidence, and delivery artifacts against written standards. That work is slow when quotes are hard to find and when “the model said so” is not enough.
 
-Building a separate agent for each use case repeats that plumbing. This project is an attempt to extract the shared engine—starting with a typed API that can later host extract, summarize, retrieve, compare, evaluate, and generate steps.
+AI Workflow Studio walks a reviewer through a workspace:
 
-Intended later workflows include:
+1. Choose a workflow (security, ITGC, project QA, or content).
+2. Inspect the source library.
+3. Run an assessment against the applicable requirements.
+4. Inspect findings with quoted evidence and verification status.
+5. Compare policy versions where that workflow supports it.
 
-- **Contract:** extract metadata → summarize → identify risks → structured report
-- **Policy:** retrieve a checklist → evaluate coverage → flag gaps → score/report
-- **Resume:** extract skills → compare to a job description → evaluation → interview questions
+The Security & Compliance workspace can call a language model. Quotes are checked as exact substrings of the original file. Sample (pre-labeled) results exist for the synthetic dataset and are labeled separately from live assessments.
 
-None of those multi-step pipelines are implemented yet.
+## Product screenshots
 
-## Architecture
+Captured from the running React application against the Northstar synthetic dataset. Assessment and comparison screens below use **sample results** (pre-labeled reference findings), not a live paid model run.
 
-```
-Document
-   ↓
-Workflow
-   ↓
-Run
-   ↓
-Processing (mocked today)
-   ↓
-Structured Result
-```
+### Workspaces
 
-- **Document** — named text a user wants processed (`name`, `content`).
-- **Workflow** — named instructions for how to process a document (`name`, `instruction`).
-- **Run** — one execution of a workflow against a document. It records `document_id`, `workflow_id`, `status`, and a `result` object.
+Modular quality-review workspaces. Security & Compliance is the live-AI demo; SOX / IT Controls, Project QA, and Content Quality are implemented as structured rule reviews.
 
-Conceptually: **Document + Workflow → Run → Structured Result**.
+![Workspaces](docs/screenshots/01-workspaces.png)
 
-Today, processing does not call a model. `POST /runs` validates that both IDs exist, then stores a **mocked** `result` with `summary` and `key_points`.
+### Document library
 
-## Current MVP
+Reference standards and company policies with section navigation. Here: Access Control Standard, including AC-03 termination requirements.
 
-Python FastAPI app with Pydantic request/response models. State lives in process-local lists with incrementing integer IDs (lost on restart). There is no database, auth, file upload, queue, or LLM client.
+![Document library](docs/screenshots/02-document-library.png)
 
-What works:
+### Assessment workflow
 
-- App metadata, root welcome payload, and a health check
-- Create and fetch documents by ID
-- Create and fetch workflows by ID
-- Create a run that joins an existing document and workflow
-- **404** when a document, workflow, or referenced run ID is missing
-- Mock structured results (`status: "completed"`)
+Select a document, see the standards it is reviewed against, then run an assessment. The summary below is sample results for Policy V1 (18 requirements).
 
-What does **not** work yet: listing collections, fetching a run by ID, PostgreSQL, embeddings, a frontend, or real generation.
+![Assessment](docs/screenshots/03-assessment.png)
 
-## API Endpoints
+### Findings and evidence
 
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `GET` | `/` | Welcome payload |
-| `GET` | `/health` | Liveness check (`{"status": "healthy"}`) |
-| `POST` | `/documents` | Create a document (`name`, `content`) |
-| `GET` | `/documents/{document_id}` | Fetch a document; **404** if missing |
-| `POST` | `/workflows` | Create a workflow (`name`, `instruction`) |
-| `GET` | `/workflows/{workflow_id}` | Fetch a workflow; **404** if missing |
-| `POST` | `/runs` | Run a workflow on a document; **404** if either ID is missing |
+AC-03 — Termination access revocation, classified **contradicted** in Policy V1, with the supporting quote and a reference explanation. The banner states these are sample results.
 
-There is no `GET /runs/{id}` or list endpoint.
+![Findings](docs/screenshots/04-findings-evidence.png)
 
-## Example
+### Policy comparison
 
-Interactive docs: `/docs`. Results below match the current mock implementation, not an LLM.
+Policy V1 vs V2 for AC-03: contradicted → satisfied, with the quotes that justify the change.
 
-**1. Create a document**
+![Policy comparison](docs/screenshots/05-policy-comparison.png)
 
-```http
-POST /documents
-```
+## Features
 
-```json
-{
-  "name": "Q3 vendor contract.txt",
-  "content": "This agreement is between Acme Corp and Northwind Supplies..."
-}
-```
+### Implemented and tested (automated tests)
 
-```json
-{
-  "id": 1,
-  "name": "Q3 vendor contract.txt",
-  "content": "This agreement is between Acme Corp and Northwind Supplies..."
-}
-```
+- React + TypeScript workspace UI (documents, assessments, findings, compare)
+- FastAPI evaluation and workspace review APIs
+- Direct-context and retrieved-passage (RAG) evaluators, with automatic method selection for the product UI
+- Exact-substring evidence verification
+- Requirement parser (18 IDs), policy section chunker, pgvector ingest/retrieval tests
+- Sample/reference metrics against `expected_findings.json` (labels are never sent to the model)
+- Deterministic SOX / ITGC, Project QA, and Content reviews on synthetic artifacts
+- Request guards: payload size limits, paid-call flag, in-process rate limits
 
-**2. Create a workflow**
+### Implemented, locally exercised, not covered by paid-model CI
 
-```http
-POST /workflows
-```
+- Live OpenAI structured evaluation (`gpt-4o-mini`)
+- OpenAI embeddings for requirement and policy passage ingest
+- End-to-end browser assessment against a live key
 
-```json
-{
-  "name": "Contract review",
-  "instruction": "Extract parties, dates, and liability terms. Summarize risks."
-}
-```
+### Planned
 
-```json
-{
-  "id": 1,
-  "name": "Contract review",
-  "instruction": "Extract parties, dates, and liability terms. Summarize risks."
-}
-```
+- Stage 6: review queue, persisted assessment history, insights
+- Stage 7: bounded LangGraph investigation
+- Excel / Gantt / Microsoft Project review
+- Authentication, job queues, and a public hosted backend
 
-**3. Run the workflow against the document**
-
-```http
-POST /runs
-```
-
-```json
-{
-  "document_id": 1,
-  "workflow_id": 1
-}
-```
-
-**4. Mocked structured result (not an LLM)**
-
-```json
-{
-  "id": 1,
-  "document_id": 1,
-  "workflow_id": 1,
-  "status": "completed",
-  "result": {
-    "summary": "Mock summary of 'Q3 vendor contract.txt' using 'Contract review'.",
-    "key_points": [
-      "Extract parties, dates, and liability terms. Summarize risks.",
-      "Processed document: Q3 vendor contract.txt"
-    ]
-  }
-}
-```
-
-The next stage is to replace this mock with a real model call that still returns structured JSON.
-
-## Tech Stack
-
-**Current**
-
-- Python
-- FastAPI
-- Pydantic
-- In-memory lists (temporary persistence)
-
-**Planned**
-
-- PostgreSQL
-- pgvector
-- LLM integration (structured generation)
-- Embeddings and semantic retrieval
-- React
-- AWS
-
-## Project Structure
+## Technical architecture
 
 ```
-AI-Workflow-Studio/
-├── README.md
-├── .gitignore
-└── backend/
-    ├── requirements.txt
-    └── app/
-        ├── main.py              # FastAPI app and routes
-        └── models/
-            ├── document.py      # DocumentCreate, DocumentResponse
-            ├── workflow.py      # WorkflowCreate, WorkflowResponse
-            └── run.py           # RunCreate, RunResponse
+Reference standards ──► parser ──► 18-requirement inventory
+                                 └► pgvector (requirements)
+
+Policy V1 / V2 ──► section chunker ──► pgvector (policy_passages, version-filtered)
+
+Assessment (auto)
+  prefer retrieved passages when the source library is verified
+  else fail, unless COMPLIANCE_ALLOW_DIRECT_FALLBACK is enabled
+       ──► OpenAI structured finding ──► exact-quote check
 ```
 
-## Roadmap
+- **Frontend:** React, TypeScript, Vite. Talks to FastAPI only. The only Vite env var is `VITE_API_BASE_URL` (API prefix). The OpenAI key never ships to the browser.
+- **Backend:** Python, FastAPI, SQLAlchemy, PostgreSQL.
+- **Retrieval:** LangChain + pgvector (`text-embedding-3-small`) for requirements and policy passages.
+- **Evaluation:** OpenAI Responses API structured parse on the backend.
+- **Evidence:** quote must appear as a substring of the selected source file.
 
-- [x] FastAPI backend
-- [x] Document models and endpoints
-- [x] Workflow models and endpoints
-- [x] Workflow execution model (`POST /runs`)
-- [x] Mock structured results
-- [ ] PostgreSQL persistence
-- [ ] Document ingestion beyond JSON `content`
-- [ ] LLM integration
-- [ ] Embedding generation
-- [ ] pgvector semantic retrieval
-- [ ] Knowledge library
-- [ ] Configurable multi-step workflow engine
-- [ ] React frontend
-- [ ] Workflow history / version comparison
-- [ ] AWS deployment
+## Getting started
 
-## Running Locally
-
-Requires Python 3 and a clone of this repo.
+Requires PostgreSQL 16 with pgvector, Python 3.9+, and Node 20+.
 
 ```bash
-git clone https://github.com/mish841/AI-Workflow-Studio.git
-cd AI-Workflow-Studio/backend
-
+cd backend
 python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-
+source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+cp .env.example .env   # set OPENAI_API_KEY and DATABASE_URL
 ```
 
-Then open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for Swagger UI, or hit `/health` to confirm the server is up. In-memory data resets whenever the process restarts.
+Optional embeddings ingest (calls OpenAI embeddings, not chat):
 
-## Status
+```bash
+cd backend
+source .venv/bin/activate
+PYTHONPATH=. python -m app.ingestion.run --all
+PYTHONPATH=. python -m app.ingestion.run --eval-retrieval
+```
 
-This is an actively developed MVP. The current work is the API and domain foundation: typed resources, ID validation, and a run object that can later carry real model output. Persistence, LLM orchestration, and retrieval are not in the codebase yet.
+API (bind to localhost):
+
+```bash
+cd backend
+source .venv/bin/activate
+PYTHONPATH=. uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Frontend:
+
+```bash
+cd frontend
+npm install
+cp .env.example .env   # VITE_API_BASE_URL=/api
+npm run dev
+```
+
+Vite proxies `/api` to `http://127.0.0.1:8000`.
+
+### Environment variables
+
+| Variable | Where | Purpose |
+| --- | --- | --- |
+| `OPENAI_API_KEY` | `backend/.env` | Embeddings and live evaluations. Never put this in Vite env. |
+| `DATABASE_URL` | `backend/.env` | PostgreSQL, no secrets in the example file |
+| `VITE_API_BASE_URL` | `frontend/.env` | API prefix (`/api` in development) |
+| `COMPLIANCE_ALLOW_DIRECT_FALLBACK` | `backend/.env` | If true, auto mode may use full-document evaluation when retrieval is not ready |
+| `PAID_OPENAI_ENABLED` | `backend/.env` | Set `false` to refuse paid chat/embedding HTTP routes |
+
+Do not commit `.env` files. This API has **no authentication**. Do not expose it on the public internet with a live key. A public GitHub repo does not require a public OpenAI backend.
+
+## Testing
+
+```bash
+cd backend && .venv/bin/python -m unittest discover -s tests -v
+cd frontend && npm test && npm run build
+```
+
+Backend tests mock the language model for evaluator logic. Retrieval tests use lexical vectors plus a throwaway pgvector collection and do not call OpenAI chat. Live chat evaluation is not part of CI.
+
+## Limitations
+
+- Northstar Technologies and all demo data are synthetic.
+- This is an evolving prototype, not a certified audit or SOX opinion.
+- AI-generated findings require human review. Sample results are pre-labeled and must not be presented as live model output.
+- RAG retrieval can miss a requirement that exists in the full file; quotes are still verified against the full source.
+- Evaluation history is in-memory on the API process.
+- Stage 6 (queue, history, insights) is not built.
+
+## License and use
+
+Portfolio prototype. Not for production compliance decisions.

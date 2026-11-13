@@ -1,0 +1,9 @@
+{
+  "project_id": "P-4421",
+  "name": "Northstar Customer Portal Refresh",
+  "sponsor": "Priya Raman",
+  "project_manager": "Eli Navarro",
+  "start_date": "2026-06-02",
+  "target_end": "2026-12-18",
+  "objective": "Replace the public customer portal login and billing views with the Harbor-hosted experience."
+}

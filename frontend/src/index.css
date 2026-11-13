@@ -1,0 +1,43 @@
+:root {
+  --navy: #152033;
+  --navy-hover: #1e2d44;
+  --accent: #1d4e89;
+  --accent-soft: #e8f0f8;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --line: #e2e6ed;
+  --text: #1b2430;
+  --muted: #5c6b7c;
+  --radius: 10px;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+button,
+input:not([type="checkbox"]):not([type="radio"]) {
+  font: inherit;
+}
+
+code,
+.req-id,
+mark {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

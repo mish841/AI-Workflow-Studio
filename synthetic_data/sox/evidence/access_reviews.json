@@ -1,0 +1,18 @@
+{
+  "period": "2026-Q3",
+  "reviews": [
+    {
+      "system": "Northstar Hub",
+      "reviewer": "Priya Raman",
+      "signed_off": "2026-09-22",
+      "accounts_reviewed": 86
+    },
+    {
+      "system": "Atlas IAM",
+      "reviewer": "Jonah West",
+      "signed_off": "2026-09-24",
+      "accounts_reviewed": 142
+    }
+  ],
+  "systems_in_scope": ["Northstar Hub", "Atlas IAM", "Harbor CI/CD"]
+}

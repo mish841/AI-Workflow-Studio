@@ -1,0 +1,27 @@
+{
+  "period": "2026-Q3",
+  "deployments": [
+    {
+      "id": "DEP-3301",
+      "change_id": "CHG-1012",
+      "environment": "production",
+      "deployed_by": "Elena Voss",
+      "deployed_at": "2026-07-21T22:14:00"
+    },
+    {
+      "id": "DEP-3388",
+      "change_id": "CHG-1044",
+      "environment": "production",
+      "deployed_by": "Jordan Hale",
+      "deployed_at": "2026-09-04T19:02:00"
+    },
+    {
+      "id": "DEP-3390",
+      "change_id": null,
+      "environment": "production",
+      "deployed_by": "Sam Okonkwo",
+      "deployed_at": "2026-09-09T11:40:00",
+      "note": "Hotfix shipped from a laptop pipeline with no change ticket."
+    }
+  ]
+}

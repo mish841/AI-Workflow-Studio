@@ -1,0 +1,426 @@
+{
+  "organization": "Northstar Technologies",
+  "disclaimer": "Findings are synthetic sample results from expected_findings.json, not live AI assessments.",
+  "counts": {
+    "v1": {
+      "satisfied": 8,
+      "partial": 5,
+      "missing": 3,
+      "contradicted": 2
+    },
+    "v2": {
+      "satisfied": 14,
+      "partial": 2,
+      "missing": 1,
+      "contradicted": 1
+    }
+  },
+  "documents": [
+    {
+      "id": "std-access-control",
+      "kind": "standard",
+      "title": "Access Control Standard",
+      "file": "access_control_standard.txt",
+      "content": "Northstar Technologies\nAccess Control Standard\nDocument ID: NST-SEC-AC-001\nClassification: Internal\nOwner: Information Security\nVersion: 1.0\n\n1. Purpose\n\nThis standard defines how Northstar Technologies grants, reviews, and removes access to company systems. It applies to employees, contractors, and any other identity that can log in to Northstar applications, infrastructure, or administrative tools.\n\nAccess control at Northstar is based on unique identities, least privilege, and timely removal of access that is no longer required. The requirements below are mandatory unless a written exception is approved by the Chief Information Security Officer (CISO).\n\n2. Scope\n\nThis standard covers operating system accounts, directory accounts, application roles, cloud consoles, and privileged or break-glass identities. It does not replace the Authentication Standard, but it does overlap with it where privileged login protections are concerned.\n\n3. Requirements\n\nAC-01 Privileged multi-factor authentication\nPrivileged user accounts must use multi-factor authentication.\nPrivileged accounts include domain administrators, cloud tenant administrators, database administrators, security tool administrators, and any account that can change security settings or access production data without an application-level approval workflow. Password-only login is not acceptable for these accounts, including when connecting from the corporate network.\n\nAC-02 Quarterly access reviews\nUser access must be reviewed at least quarterly.\nEach system owner must confirm that every active account still has a valid business need and that assigned roles remain the minimum required. Reviews must cover standard users and privileged users. Completing a review only for administrators, or only once per year, does not meet this requirement.\n\nAC-03 Termination access revocation\nAccess must be revoked within 24 hours of employment termination.\nThe 24-hour clock starts when Human Resources records the worker as terminated or when a contractor engagement officially ends, whichever is earlier. Revocation includes directory login, VPN, email, source control, cloud consoles, and production application roles. Disabling an account at the next monthly cleanup cycle is not sufficient.\n\nAC-04 Privileged access approval\nPrivileged access must be granted only through a documented approval process that includes both the requestor\u2019s manager and a security owner.\nThe security owner is the Information Security team or a named application security owner. Approvals must be recorded before the privilege is provisioned. Informal chat approval, after-the-fact justification, or manager-only approval does not satisfy this requirement.\n\nAC-05 Unique interactive identities\nEach person must use a unique user identifier for interactive login. Shared or generic accounts are prohibited for interactive use.\nService accounts used only by applications are permitted if they cannot be used for interactive login and are inventoried. Emergency break-glass accounts, if they exist, must still be attributed to a named individual when used and must not be a standing shared password used by a team.\n\n4. Related controls\n\nPrivileged MFA in AC-01 is related to, but not the same as, remote-access MFA in the Authentication Standard. Quarterly reviews in AC-02 are related to termination handling in AC-03: a review finds stale access; termination should already have removed it. Logging of privileged activity may also appear in the Data Protection Standard; that logging does not replace the approval and uniqueness rules in this document.\n\n5. Exceptions and review\n\nExceptions must be time-bounded, documented, and approved by the CISO. This standard is reviewed at least annually.\n"
+    },
+    {
+      "id": "std-authentication",
+      "kind": "standard",
+      "title": "Authentication Standard",
+      "file": "authentication_standard.txt",
+      "content": "Northstar Technologies\nAuthentication Standard\nDocument ID: NST-SEC-AUTH-001\nClassification: Internal\nOwner: Identity and Access Management\nVersion: 1.0\n\n1. Purpose\n\nThis standard defines how users prove their identity when accessing Northstar Technologies systems. It covers remote access, password quality, account lockout, session lifetime, and password reuse. The goal is to reduce credential theft and limit the window in which a stolen password can be used.\n\n2. Scope\n\nThis standard applies to workforce identities used for corporate applications, VPN, cloud consoles, and administrative interfaces. Customer-facing product login may follow a separate product standard; workforce access may not opt out of the requirements below.\n\n3. Requirements\n\nAUTH-01 Remote access multi-factor authentication\nAll remote access to corporate systems must require multi-factor authentication.\nRemote access includes VPN, reverse proxies, cloud consoles reached from outside the office, and any split-tunnel or zero-trust access broker. MFA that applies only to VPN, while other remote paths remain password-only, does not meet this requirement. This control is related to privileged MFA in the Access Control Standard: privileged accounts always need MFA, and remote access needs MFA even for non-privileged users.\n\nAUTH-02 Password length and compromised-password screening\nPasswords must be at least 14 characters and must not be a password that has appeared in a known breach list.\nNorthstar must check new and changed passwords against a current compromised-password dataset (for example, a vendor-provided breach corpus or equivalent). Complexity rules such as \u201cone uppercase letter\u201d do not replace the 14-character minimum. Allowing shorter passwords for legacy systems, without a CISO exception, does not meet this requirement.\n\nAUTH-03 Failed-attempt lockout\nAn account must be locked after five consecutive failed login attempts.\nLockout applies to directory, VPN, and applications that use Northstar single sign-on. Temporary lockout of at least 15 minutes, or until an administrator or automated identity workflow unlocks the account, is required. A warning message without lockout, or lockout only after ten failures, does not meet this requirement.\n\nAUTH-04 Idle session timeout\nPrivileged sessions must time out after 15 minutes of inactivity. Standard user sessions must time out after 30 minutes of inactivity.\nTimeout must end the session or require re-authentication. Screensaver locks on laptops do not satisfy this requirement for server consoles, cloud consoles, or web applications. This requirement is related to privileged access in the Access Control Standard: the stricter 15-minute timer applies whenever the session is privileged, even if the user originally authenticated with MFA.\n\nAUTH-05 Password history\nReuse of the last 12 passwords is prohibited.\nThe identity system must reject a password change that matches any of the user\u2019s previous 12 passwords. Advising users \u201cnot to reuse passwords\u201d without technical enforcement does not meet this requirement.\n\n4. Related controls\n\nAuthentication failures and lockouts should be visible to operations staff. Detailed query logs for production databases that hold customer personal data are specified in the Data Protection Standard; those logs are not a substitute for lockout and timeout. Incident response may treat repeated lockouts as a security event; reporting timelines are defined in the Incident Response Standard.\n\n5. Exceptions and review\n\nProtocol constraints that prevent 14-character passwords require a documented, time-bounded CISO exception and a compensating control. This standard is reviewed at least annually.\n"
+    },
+    {
+      "id": "std-data-protection",
+      "kind": "standard",
+      "title": "Data Protection Standard",
+      "file": "data_protection_standard.txt",
+      "content": "Northstar Technologies\nData Protection Standard\nDocument ID: NST-SEC-DP-001\nClassification: Internal\nOwner: Data Protection Office / Information Security\nVersion: 1.0\n\n1. Purpose\n\nThis standard defines how Northstar Technologies protects Confidential and Restricted information at rest, in transit, in backups, and in production database access logs. Customer personal data used in Northstar products is treated as Restricted unless a data-protection assessment assigns a lower classification.\n\n2. Classification used in this standard\n\nConfidential: internal information that would harm Northstar if disclosed (for example, unreleased financials, detailed architecture).\nRestricted: customer personal data, authentication secrets, and similarly sensitive regulated data.\n\n3. Requirements\n\nDP-01 Encryption at rest\nData classified as Confidential or Restricted must be encrypted at rest using AES-256 or an equivalent algorithm approved by Information Security.\nFull-disk encryption, database transparent encryption, or object-storage server-side encryption meets this requirement when the algorithm is AES-256 or equivalent and keys are not stored in the same location as the ciphertext in plaintext form. Stating that encryption should be used \u201cwhere practical,\u201d or encrypting only laptops, does not meet this requirement for Confidential or Restricted data in servers, databases, and object storage.\n\nDP-02 Encryption in transit\nConfidential data transmitted over public networks must use TLS 1.2 or higher.\nPublic networks include the internet and any path that leaves a Northstar-controlled data center or cloud VPC. TLS 1.0 or 1.1 is not acceptable. This requirement is related to remote access in the Authentication Standard: an encrypted VPN does not remove the need for TLS 1.2 or higher on application traffic that still crosses a public network.\n\nDP-03 Production database access logging\nProduction databases that contain customer personal data must log query and access activity, and those logs must be retained for at least 12 months.\nLogs must identify the authenticated principal (or service account), timestamp, and object or query sufficient to support an investigation. Infrastructure or firewall logs alone do not meet this requirement. This logging is related to privileged access in the Access Control Standard and to incident investigation in the Incident Response Standard; neither of those documents sets the 12-month retention period.\n\nDP-04 Encrypted geographically separated backups\nBackup media containing Confidential data must be encrypted and stored offsite or in a geographically separate region.\n\u201cGeographically separate\u201d means a different metropolitan region or cloud region from the primary copy. Unencrypted tapes or snapshots stored in the same building as production do not meet this requirement. Encryption of backups is related to DP-01 but is independently required even when production storage is already encrypted.\n\n4. Related controls\n\nAccess to decryption keys is privileged access and must follow the Access Control Standard. Lost backup media or suspected ciphertext exfiltration must be handled under the Incident Response Standard. Authentication logs required by the Authentication Standard (failed logins, lockouts) are not a substitute for database query logs in DP-03.\n\n5. Exceptions and review\n\nAlgorithm exceptions require Information Security approval and a documented compensating control. This standard is reviewed at least annually.\n"
+    },
+    {
+      "id": "std-incident-response",
+      "kind": "standard",
+      "title": "Incident Response Standard",
+      "file": "incident_response_standard.txt",
+      "content": "Northstar Technologies\nIncident Response Standard\nDocument ID: NST-SEC-IR-001\nClassification: Internal\nOwner: Security Operations\nVersion: 1.0\n\n1. Purpose\n\nThis standard defines how Northstar Technologies reports, classifies, discloses, and reviews security incidents. Fast reporting protects customers and limits dwell time. After-action reviews exist so the same failure is less likely to repeat.\n\n2. Scope\n\nThis standard applies to confirmed and suspected events affecting confidentiality, integrity, or availability of Northstar systems or data. It includes malware, account takeover, lost devices containing Confidential data, production misconfiguration, and privacy incidents involving customer personal data.\n\n3. Requirements\n\nIR-01 One-hour reporting to the Security Operations Center\nSecurity incidents must be reported to the Security Operations Center (SOC) within one hour of detection.\nDetection means the point at which a workforce member, monitoring alert, or vendor first has a reasonable basis to believe a security incident may be occurring. Reporting \u201cby the next business day,\u201d or only after a manager reviews the event, does not meet this requirement. This timeline applies to all suspected security incidents, not only high-severity events.\n\nIR-02 Severity classification within two hours\nA documented incident severity classification (Sev 1 through Sev 4) must be applied to every incident within two hours of the report to the SOC.\nSev 1: active customer data exposure or widespread production outage caused by a security event.\nSev 2: significant security impact with a credible path to customer harm or material downtime.\nSev 3: limited impact, contained, no evidence of customer data exposure.\nSev 4: suspected event later confirmed as a false positive or negligible risk.\nLeaving severity blank overnight, or using informal labels such as \u201cpretty bad,\u201d does not meet this requirement. Severity may later be upgraded or downgraded with a timestamped note.\n\nIR-03 Seventy-two-hour customer notification\nCustomers must be notified of a confirmed confidentiality breach involving their personal data within 72 hours of confirmation.\nConfirmation is the documented decision that unauthorized access to or disclosure of that customer\u2019s personal data occurred. \u201cNotify in a timely manner\u201d without a 72-hour clock does not meet this requirement. Legal hold or law-enforcement delay requires CISO and counsel approval and must be recorded.\n\nIR-04 After-action reviews for Sev 1 and Sev 2\nAfter-action reviews must be completed within 10 business days of incident closure for Sev 1 and Sev 2 incidents.\nThe review must record root cause, timeline, what worked, and assigned follow-up owners. Optional lessons-learned meetings \u201cas time allows,\u201d or reviews only for Sev 1, do not meet this requirement. Sev 3 and Sev 4 reviews are encouraged but not required by this standard.\n\n4. Related controls\n\nInvestigations will often need database access logs from the Data Protection Standard and authentication lockout data from the Authentication Standard. Privileged account misuse is also an access-control issue; reporting still follows IR-01 even when the Access Control Standard is the long-term fix.\n\n5. Exceptions and review\n\nThis standard is reviewed at least annually or after any Sev 1 incident.\n"
+    },
+    {
+      "id": "policy-v1",
+      "kind": "policy",
+      "title": "Information Security Policy V1",
+      "file": "security_policy_v1.txt",
+      "policyVersion": "v1",
+      "content": "Northstar Technologies\nInformation Security Policy\nVersion: 1.0\nEffective: 4 March 2024\nOwner: Chief Information Security Officer\nClassification: Internal\n\n1. Introduction\n\nNorthstar Technologies (\u201cNorthstar\u201d) builds analytics software for mid-market customers. This Information Security Policy describes how we protect company and customer information. All employees and contractors who use Northstar systems are expected to follow it. Related procedures may be published by Information Security; where this policy is silent, teams should use reasonable professional judgment and escalate questions to the CISO.\n\n2. Identities and access\n\nEvery person who logs in to Northstar systems must have a unique user identifier. Shared logins for day-to-day interactive use are not allowed. Application service accounts may exist where a system, not a person, needs to authenticate, provided those accounts are not used as a shared team password.\n\nPrivileged access \u2014 including domain administration, cloud tenant administration, and production database administration \u2014 must be requested in writing. The requestor\u2019s manager and the Information Security team must both approve the request before the privilege is turned on. Privileged users must sign in with multi-factor authentication. Password-only privileged access is not permitted.\n\nRemote access to the corporate network, including VPN and Northstar\u2019s cloud administration portals from outside a Northstar office, also requires multi-factor authentication.\n\nManagers should review the access of people on their teams at least once per year and remove access that is no longer needed. When someone leaves Northstar, Human Resources will notify IT, and IT will disable the person\u2019s accounts within thirty (30) days of the last day of employment or contract.\n\n3. Passwords and login protection\n\nUser passwords must be at least eight (8) characters and should include a mix of letters and numbers. Users are encouraged to choose memorable phrases rather than simple dictionary words.\n\nAfter five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed.\n\nLaptop screen locks are required when staff step away from their desks. Application and console session lifetimes are left to product and infrastructure owners.\n\n4. Protecting data\n\nNorthstar classifies information as Public, Internal, Confidential, or Restricted. Customer personal data is treated as Restricted.\n\nData sent over the internet or other public networks must be protected with TLS 1.2 or higher. Internal tools that still speak older TLS versions must be upgraded or isolated.\n\nEncryption of data at rest should be used where practical, especially on company laptops. Server and database encryption is encouraged when it does not interfere with operations.\n\nBackups of Confidential information must be encrypted. A copy of those backups must be stored in a cloud region or facility that is geographically separate from the primary production environment.\n\n5. Detecting and handling incidents\n\nAnyone who believes a security incident may be occurring must notify the Security Operations Center by the next business day. The SOC will assign a severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of receiving the report.\n\nIf Northstar confirms that a customer\u2019s personal data was involved in a confidentiality breach, Customer Success and Legal will notify that customer as soon as practicable.\n\n6. Policy administration\n\nThis policy is reviewed at least annually. Exceptions require CISO approval. Questions should be sent to security@northstar.example.\n"
+    },
+    {
+      "id": "policy-v2",
+      "kind": "policy",
+      "title": "Information Security Policy V2",
+      "file": "security_policy_v2.txt",
+      "policyVersion": "v2",
+      "content": "Northstar Technologies\nInformation Security Policy\nVersion: 2.0\nEffective: 12 January 2026\nOwner: Chief Information Security Officer\nClassification: Internal\nSupersedes: Version 1.0 (4 March 2024)\n\n1. Introduction\n\nNorthstar Technologies (\u201cNorthstar\u201d) builds analytics software for mid-market customers. This Information Security Policy describes mandatory controls for workforce access, authentication, data protection, and incident handling. All employees and contractors who use Northstar systems must follow it. Product-specific customer login experiences are out of scope except where they store or process customer personal data on Northstar infrastructure.\n\n2. Identities and access\n\nEvery person who logs in interactively must have a unique user identifier. Shared or generic accounts are prohibited for interactive use. Non-interactive service accounts are permitted if they cannot be used for human login and are recorded in the identity inventory.\n\nPrivileged access \u2014 including domain administration, cloud tenant administration, production database administration, and security-tool administration \u2014 must be requested in writing. The requestor\u2019s manager and a security owner (Information Security or a named application security owner) must both approve the request before the privilege is provisioned. Privileged users must authenticate with multi-factor authentication; password-only privileged login is prohibited.\n\nAll remote access to corporate systems, including VPN, zero-trust access brokers, and cloud consoles used from outside a Northstar office, requires multi-factor authentication.\n\nSystem owners must review user access at least quarterly, including both standard and privileged roles, and remove access that no longer has a business need.\n\nWhen Human Resources records a termination, or when a contractor engagement ends, IT must revoke directory, VPN, email, source control, cloud console, and production application access within twenty-four (24) hours.\n\n3. Passwords, lockout, and sessions\n\nPasswords must be at least twelve (12) characters. Users should prefer passphrases. Identity and Access Management is encouraged to check new passwords against known-breach datasets when the identity platform makes that check available; the check is recommended, not mandatory, in this version of the policy.\n\nReuse of any of a user\u2019s last twelve (12) passwords is prohibited, and the identity system must enforce that history check at password change.\n\nAfter five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed.\n\nPrivileged sessions must time out after fifteen (15) minutes of inactivity. Standard user sessions must time out after thirty (30) minutes of inactivity. Timeout must require re-authentication; a device screensaver alone is not sufficient for cloud consoles or web applications.\n\n4. Protecting data\n\nNorthstar classifies information as Public, Internal, Confidential, or Restricted. Customer personal data is Restricted.\n\nConfidential and Restricted data at rest \u2014 including servers, databases, and object storage, not only laptops \u2014 must be encrypted using AES-256 or another algorithm approved in writing by Information Security. Encryption keys must not be stored in plaintext beside the data they protect.\n\nConfidential data transmitted over public networks must use TLS 1.2 or higher.\n\nBackups that contain Confidential data must be encrypted and stored offsite or in a geographically separate region from the primary production copy.\n\n5. Detecting and handling incidents\n\nSev 1 security incidents must be reported to the Security Operations Center within one hour of detection. All other suspected security incidents must be reported by the next business day.\n\nThe SOC must assign a documented severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of the report.\n\nIf Northstar confirms a confidentiality breach involving a customer\u2019s personal data, that customer must be notified within seventy-two (72) hours of confirmation, unless counsel and the CISO record a legally required delay.\n\nAfter-action reviews are required for Sev 1 incidents and must be completed within ten (10) business days of closure. After-action reviews for Sev 2 incidents are encouraged. Reviews should capture root cause and follow-up owners when they are performed.\n\n6. Policy administration\n\nThis policy is reviewed at least annually and after any Sev 1 incident. Exceptions require time-bounded CISO approval. Questions should be sent to security@northstar.example.\n"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "AC-01",
+      "title": "Privileged multi-factor authentication",
+      "category": "access_control",
+      "categoryLabel": "Access Control",
+      "sourceFile": "access_control_standard.txt",
+      "fullText": "AC-01 Privileged multi-factor authentication\nPrivileged user accounts must use multi-factor authentication.\nPrivileged accounts include domain administrators, cloud tenant administrators, database administrators, security tool administrators, and any account that can change security settings or access production data without an application-level approval workflow. Password-only login is not acceptable for these accounts, including when connecting from the corporate network.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "The policy requires multi-factor authentication for privileged users and forbids password-only privileged access.",
+          "evidence": "Privileged users must sign in with multi-factor authentication. Password-only privileged access is not permitted."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Privileged users must use multi-factor authentication; password-only privileged login is prohibited.",
+          "evidence": "Privileged users must authenticate with multi-factor authentication; password-only privileged login is prohibited."
+        }
+      }
+    },
+    {
+      "id": "AC-02",
+      "title": "Quarterly access reviews",
+      "category": "access_control",
+      "categoryLabel": "Access Control",
+      "sourceFile": "access_control_standard.txt",
+      "fullText": "AC-02 Quarterly access reviews\nUser access must be reviewed at least quarterly.\nEach system owner must confirm that every active account still has a valid business need and that assigned roles remain the minimum required. Reviews must cover standard users and privileged users. Completing a review only for administrators, or only once per year, does not meet this requirement.",
+      "findings": {
+        "v1": {
+          "status": "partial",
+          "reason": "The policy requires access reviews, but only at least once per year, not at least quarterly, and it assigns reviews to managers rather than requiring system-owner reviews of all roles on a quarterly cadence.",
+          "evidence": "Managers should review the access of people on their teams at least once per year and remove access that is no longer needed."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "System owners must review standard and privileged access at least quarterly.",
+          "evidence": "System owners must review user access at least quarterly, including both standard and privileged roles, and remove access that no longer has a business need."
+        }
+      }
+    },
+    {
+      "id": "AC-03",
+      "title": "Termination access revocation",
+      "category": "access_control",
+      "categoryLabel": "Access Control",
+      "sourceFile": "access_control_standard.txt",
+      "fullText": "AC-03 Termination access revocation\nAccess must be revoked within 24 hours of employment termination.\nThe 24-hour clock starts when Human Resources records the worker as terminated or when a contractor engagement officially ends, whichever is earlier. Revocation includes directory login, VPN, email, source control, cloud consoles, and production application roles. Disabling an account at the next monthly cleanup cycle is not sufficient.",
+      "findings": {
+        "v1": {
+          "status": "contradicted",
+          "reason": "The policy allows up to 30 days to disable accounts after the last day of employment, which exceeds the 24-hour revocation window.",
+          "evidence": "IT will disable the person\u2019s accounts within thirty (30) days of the last day of employment or contract."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Access across directory, VPN, email, source control, cloud consoles, and production applications must be revoked within 24 hours of termination.",
+          "evidence": "IT must revoke directory, VPN, email, source control, cloud console, and production application access within twenty-four (24) hours."
+        }
+      }
+    },
+    {
+      "id": "AC-04",
+      "title": "Privileged access approval",
+      "category": "access_control",
+      "categoryLabel": "Access Control",
+      "sourceFile": "access_control_standard.txt",
+      "fullText": "AC-04 Privileged access approval\nPrivileged access must be granted only through a documented approval process that includes both the requestor\u2019s manager and a security owner.\nThe security owner is the Information Security team or a named application security owner. Approvals must be recorded before the privilege is provisioned. Informal chat approval, after-the-fact justification, or manager-only approval does not satisfy this requirement.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "Privileged access requires documented dual approval from the manager and Information Security before provisioning.",
+          "evidence": "The requestor\u2019s manager and the Information Security team must both approve the request before the privilege is turned on."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Privileged access still requires manager and security-owner approval before provisioning.",
+          "evidence": "The requestor\u2019s manager and a security owner (Information Security or a named application security owner) must both approve the request before the privilege is provisioned."
+        }
+      }
+    },
+    {
+      "id": "AC-05",
+      "title": "Unique interactive identities",
+      "category": "access_control",
+      "categoryLabel": "Access Control",
+      "sourceFile": "access_control_standard.txt",
+      "fullText": "AC-05 Unique interactive identities\nEach person must use a unique user identifier for interactive login. Shared or generic accounts are prohibited for interactive use.\nService accounts used only by applications are permitted if they cannot be used for interactive login and are inventoried. Emergency break-glass accounts, if they exist, must still be attributed to a named individual when used and must not be a standing shared password used by a team.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "The policy requires unique user identifiers and prohibits shared interactive logins, while allowing non-interactive service accounts.",
+          "evidence": "Every person who logs in to Northstar systems must have a unique user identifier. Shared logins for day-to-day interactive use are not allowed."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Interactive logins must use unique identifiers; shared or generic interactive accounts are prohibited.",
+          "evidence": "Every person who logs in interactively must have a unique user identifier. Shared or generic accounts are prohibited for interactive use."
+        }
+      }
+    },
+    {
+      "id": "AUTH-01",
+      "title": "Remote access multi-factor authentication",
+      "category": "authentication",
+      "categoryLabel": "Authentication",
+      "sourceFile": "authentication_standard.txt",
+      "fullText": "AUTH-01 Remote access multi-factor authentication\nAll remote access to corporate systems must require multi-factor authentication.\nRemote access includes VPN, reverse proxies, cloud consoles reached from outside the office, and any split-tunnel or zero-trust access broker. MFA that applies only to VPN, while other remote paths remain password-only, does not meet this requirement. This control is related to privileged MFA in the Access Control Standard: privileged accounts always need MFA, and remote access needs MFA even for non-privileged users.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "Multi-factor authentication is required for remote access, including VPN and cloud administration portals used from outside a Northstar office.",
+          "evidence": "Remote access to the corporate network, including VPN and Northstar\u2019s cloud administration portals from outside a Northstar office, also requires multi-factor authentication."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "MFA is required for all listed remote access paths, including VPN, zero-trust brokers, and off-site cloud consoles.",
+          "evidence": "All remote access to corporate systems, including VPN, zero-trust access brokers, and cloud consoles used from outside a Northstar office, requires multi-factor authentication."
+        }
+      }
+    },
+    {
+      "id": "AUTH-02",
+      "title": "Password length and compromised-password screening",
+      "category": "authentication",
+      "categoryLabel": "Authentication",
+      "sourceFile": "authentication_standard.txt",
+      "fullText": "AUTH-02 Password length and compromised-password screening\nPasswords must be at least 14 characters and must not be a password that has appeared in a known breach list.\nNorthstar must check new and changed passwords against a current compromised-password dataset (for example, a vendor-provided breach corpus or equivalent). Complexity rules such as \u201cone uppercase letter\u201d do not replace the 14-character minimum. Allowing shorter passwords for legacy systems, without a CISO exception, does not meet this requirement.",
+      "findings": {
+        "v1": {
+          "status": "partial",
+          "reason": "A password minimum exists, but it is 8 characters rather than 14, and there is no check against known-breach password lists.",
+          "evidence": "User passwords must be at least eight (8) characters and should include a mix of letters and numbers."
+        },
+        "v2": {
+          "status": "partial",
+          "reason": "The minimum length increased to 12 characters, which is still below 14, and breach-list screening is only recommended when available, not required.",
+          "evidence": "Passwords must be at least twelve (12) characters. Users should prefer passphrases. Identity and Access Management is encouraged to check new passwords against known-breach datasets when the identity platform makes that check available; the check is recommended, not mandatory, in this version of the policy."
+        }
+      }
+    },
+    {
+      "id": "AUTH-03",
+      "title": "Failed-attempt lockout",
+      "category": "authentication",
+      "categoryLabel": "Authentication",
+      "sourceFile": "authentication_standard.txt",
+      "fullText": "AUTH-03 Failed-attempt lockout\nAn account must be locked after five consecutive failed login attempts.\nLockout applies to directory, VPN, and applications that use Northstar single sign-on. Temporary lockout of at least 15 minutes, or until an administrator or automated identity workflow unlocks the account, is required. A warning message without lockout, or lockout only after ten failures, does not meet this requirement.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "Accounts lock after five consecutive failed attempts, with unlock by IAM or a cool-down of at least 15 minutes.",
+          "evidence": "After five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Lockout after five consecutive failures is unchanged and still matches the standard.",
+          "evidence": "After five consecutive failed login attempts, the account must be locked until Identity and Access Management unlocks it or until an automated cool-down of at least fifteen minutes has elapsed."
+        }
+      }
+    },
+    {
+      "id": "AUTH-04",
+      "title": "Idle session timeout",
+      "category": "authentication",
+      "categoryLabel": "Authentication",
+      "sourceFile": "authentication_standard.txt",
+      "fullText": "AUTH-04 Idle session timeout\nPrivileged sessions must time out after 15 minutes of inactivity. Standard user sessions must time out after 30 minutes of inactivity.\nTimeout must end the session or require re-authentication. Screensaver locks on laptops do not satisfy this requirement for server consoles, cloud consoles, or web applications. This requirement is related to privileged access in the Access Control Standard: the stricter 15-minute timer applies whenever the session is privileged, even if the user originally authenticated with MFA.",
+      "findings": {
+        "v1": {
+          "status": "partial",
+          "reason": "The policy mentions session lifetime only to defer it to product owners and mentions laptop screen locks, which the Authentication Standard says do not satisfy the 15-minute privileged / 30-minute standard idle timeout.",
+          "evidence": "Laptop screen locks are required when staff step away from their desks. Application and console session lifetimes are left to product and infrastructure owners."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Idle timeouts are 15 minutes for privileged sessions and 30 minutes for standard sessions, with re-authentication required.",
+          "evidence": "Privileged sessions must time out after fifteen (15) minutes of inactivity. Standard user sessions must time out after thirty (30) minutes of inactivity."
+        }
+      }
+    },
+    {
+      "id": "AUTH-05",
+      "title": "Password history",
+      "category": "authentication",
+      "categoryLabel": "Authentication",
+      "sourceFile": "authentication_standard.txt",
+      "fullText": "AUTH-05 Password history\nReuse of the last 12 passwords is prohibited.\nThe identity system must reject a password change that matches any of the user\u2019s previous 12 passwords. Advising users \u201cnot to reuse passwords\u201d without technical enforcement does not meet this requirement.",
+      "findings": {
+        "v1": {
+          "status": "missing",
+          "reason": "The policy has no password-history or reuse-prevention language.",
+          "evidence": null
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Reuse of the last 12 passwords is prohibited and must be enforced by the identity system.",
+          "evidence": "Reuse of any of a user\u2019s last twelve (12) passwords is prohibited, and the identity system must enforce that history check at password change."
+        }
+      }
+    },
+    {
+      "id": "DP-01",
+      "title": "Encryption at rest",
+      "category": "data_protection",
+      "categoryLabel": "Data Protection",
+      "sourceFile": "data_protection_standard.txt",
+      "fullText": "DP-01 Encryption at rest\nData classified as Confidential or Restricted must be encrypted at rest using AES-256 or an equivalent algorithm approved by Information Security.\nFull-disk encryption, database transparent encryption, or object-storage server-side encryption meets this requirement when the algorithm is AES-256 or equivalent and keys are not stored in the same location as the ciphertext in plaintext form. Stating that encryption should be used \u201cwhere practical,\u201d or encrypting only laptops, does not meet this requirement for Confidential or Restricted data in servers, databases, and object storage.",
+      "findings": {
+        "v1": {
+          "status": "partial",
+          "reason": "Encryption at rest is encouraged 'where practical' and emphasized for laptops, but AES-256 (or equivalent) is not required for Confidential or Restricted data on servers, databases, and object storage.",
+          "evidence": "Encryption of data at rest should be used where practical, especially on company laptops. Server and database encryption is encouraged when it does not interfere with operations."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Confidential and Restricted data at rest on servers, databases, and object storage must use AES-256 or an Information Security-approved equivalent.",
+          "evidence": "Confidential and Restricted data at rest \u2014 including servers, databases, and object storage, not only laptops \u2014 must be encrypted using AES-256 or another algorithm approved in writing by Information Security."
+        }
+      }
+    },
+    {
+      "id": "DP-02",
+      "title": "Encryption in transit",
+      "category": "data_protection",
+      "categoryLabel": "Data Protection",
+      "sourceFile": "data_protection_standard.txt",
+      "fullText": "DP-02 Encryption in transit\nConfidential data transmitted over public networks must use TLS 1.2 or higher.\nPublic networks include the internet and any path that leaves a Northstar-controlled data center or cloud VPC. TLS 1.0 or 1.1 is not acceptable. This requirement is related to remote access in the Authentication Standard: an encrypted VPN does not remove the need for TLS 1.2 or higher on application traffic that still crosses a public network.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "TLS 1.2 or higher is required for data sent over the internet or other public networks.",
+          "evidence": "Data sent over the internet or other public networks must be protected with TLS 1.2 or higher."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "TLS 1.2 or higher remains required for Confidential data on public networks.",
+          "evidence": "Confidential data transmitted over public networks must use TLS 1.2 or higher."
+        }
+      }
+    },
+    {
+      "id": "DP-03",
+      "title": "Production database access logging",
+      "category": "data_protection",
+      "categoryLabel": "Data Protection",
+      "sourceFile": "data_protection_standard.txt",
+      "fullText": "DP-03 Production database access logging\nProduction databases that contain customer personal data must log query and access activity, and those logs must be retained for at least 12 months.\nLogs must identify the authenticated principal (or service account), timestamp, and object or query sufficient to support an investigation. Infrastructure or firewall logs alone do not meet this requirement. This logging is related to privileged access in the Access Control Standard and to incident investigation in the Incident Response Standard; neither of those documents sets the 12-month retention period.",
+      "findings": {
+        "v1": {
+          "status": "missing",
+          "reason": "The policy does not mention production database query or access logging, nor 12-month retention of those logs.",
+          "evidence": null
+        },
+        "v2": {
+          "status": "missing",
+          "reason": "The policy still does not require query/access logging of production databases that contain customer personal data, or 12-month retention of those logs.",
+          "evidence": null
+        }
+      }
+    },
+    {
+      "id": "DP-04",
+      "title": "Encrypted geographically separated backups",
+      "category": "data_protection",
+      "categoryLabel": "Data Protection",
+      "sourceFile": "data_protection_standard.txt",
+      "fullText": "DP-04 Encrypted geographically separated backups\nBackup media containing Confidential data must be encrypted and stored offsite or in a geographically separate region.\n\u201cGeographically separate\u201d means a different metropolitan region or cloud region from the primary copy. Unencrypted tapes or snapshots stored in the same building as production do not meet this requirement. Encryption of backups is related to DP-01 but is independently required even when production storage is already encrypted.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "Confidential backups must be encrypted and stored in a geographically separate region or facility.",
+          "evidence": "Backups of Confidential information must be encrypted. A copy of those backups must be stored in a cloud region or facility that is geographically separate from the primary production environment."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Confidential backups must be encrypted and stored offsite or in a geographically separate region.",
+          "evidence": "Backups that contain Confidential data must be encrypted and stored offsite or in a geographically separate region from the primary production copy."
+        }
+      }
+    },
+    {
+      "id": "IR-01",
+      "title": "One-hour reporting to the Security Operations Center",
+      "category": "incident_response",
+      "categoryLabel": "Incident Response",
+      "sourceFile": "incident_response_standard.txt",
+      "fullText": "IR-01 One-hour reporting to the Security Operations Center\nSecurity incidents must be reported to the Security Operations Center (SOC) within one hour of detection.\nDetection means the point at which a workforce member, monitoring alert, or vendor first has a reasonable basis to believe a security incident may be occurring. Reporting \u201cby the next business day,\u201d or only after a manager reviews the event, does not meet this requirement. This timeline applies to all suspected security incidents, not only high-severity events.",
+      "findings": {
+        "v1": {
+          "status": "contradicted",
+          "reason": "Incidents may be reported by the next business day, which is later than the one-hour SOC reporting requirement for all detections.",
+          "evidence": "Anyone who believes a security incident may be occurring must notify the Security Operations Center by the next business day."
+        },
+        "v2": {
+          "status": "contradicted",
+          "reason": "Only Sev 1 incidents must be reported within one hour; all other suspected incidents may wait until the next business day, which contradicts the one-hour rule for every detection.",
+          "evidence": "Sev 1 security incidents must be reported to the Security Operations Center within one hour of detection. All other suspected security incidents must be reported by the next business day."
+        }
+      }
+    },
+    {
+      "id": "IR-02",
+      "title": "Severity classification within two hours",
+      "category": "incident_response",
+      "categoryLabel": "Incident Response",
+      "sourceFile": "incident_response_standard.txt",
+      "fullText": "IR-02 Severity classification within two hours\nA documented incident severity classification (Sev 1 through Sev 4) must be applied to every incident within two hours of the report to the SOC.\nSev 1: active customer data exposure or widespread production outage caused by a security event.\nSev 2: significant security impact with a credible path to customer harm or material downtime.\nSev 3: limited impact, contained, no evidence of customer data exposure.\nSev 4: suspected event later confirmed as a false positive or negligible risk.\nLeaving severity blank overnight, or using informal labels such as \u201cpretty bad,\u201d does not meet this requirement. Severity may later be upgraded or downgraded with a timestamped note.",
+      "findings": {
+        "v1": {
+          "status": "satisfied",
+          "reason": "Sev 1\u20134 must be assigned within two hours of the SOC receiving the report.",
+          "evidence": "The SOC will assign a severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of receiving the report."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Documented Sev 1\u20134 classification is still required within two hours of the report.",
+          "evidence": "The SOC must assign a documented severity of Sev 1, Sev 2, Sev 3, or Sev 4 within two hours of the report."
+        }
+      }
+    },
+    {
+      "id": "IR-03",
+      "title": "Seventy-two-hour customer notification",
+      "category": "incident_response",
+      "categoryLabel": "Incident Response",
+      "sourceFile": "incident_response_standard.txt",
+      "fullText": "IR-03 Seventy-two-hour customer notification\nCustomers must be notified of a confirmed confidentiality breach involving their personal data within 72 hours of confirmation.\nConfirmation is the documented decision that unauthorized access to or disclosure of that customer\u2019s personal data occurred. \u201cNotify in a timely manner\u201d without a 72-hour clock does not meet this requirement. Legal hold or law-enforcement delay requires CISO and counsel approval and must be recorded.",
+      "findings": {
+        "v1": {
+          "status": "partial",
+          "reason": "Customer notification is required after a confirmed personal-data confidentiality breach, but only 'as soon as practicable,' not within 72 hours of confirmation.",
+          "evidence": "If Northstar confirms that a customer\u2019s personal data was involved in a confidentiality breach, Customer Success and Legal will notify that customer as soon as practicable."
+        },
+        "v2": {
+          "status": "satisfied",
+          "reason": "Confirmed confidentiality breaches involving a customer\u2019s personal data require notification within 72 hours of confirmation, with a recorded legal delay exception.",
+          "evidence": "If Northstar confirms a confidentiality breach involving a customer\u2019s personal data, that customer must be notified within seventy-two (72) hours of confirmation, unless counsel and the CISO record a legally required delay."
+        }
+      }
+    },
+    {
+      "id": "IR-04",
+      "title": "After-action reviews for Sev 1 and Sev 2",
+      "category": "incident_response",
+      "categoryLabel": "Incident Response",
+      "sourceFile": "incident_response_standard.txt",
+      "fullText": "IR-04 After-action reviews for Sev 1 and Sev 2\nAfter-action reviews must be completed within 10 business days of incident closure for Sev 1 and Sev 2 incidents.\nThe review must record root cause, timeline, what worked, and assigned follow-up owners. Optional lessons-learned meetings \u201cas time allows,\u201d or reviews only for Sev 1, do not meet this requirement. Sev 3 and Sev 4 reviews are encouraged but not required by this standard.",
+      "findings": {
+        "v1": {
+          "status": "missing",
+          "reason": "The policy does not require after-action reviews for Sev 1 or Sev 2 incidents or set a 10-business-day completion window.",
+          "evidence": null
+        },
+        "v2": {
+          "status": "partial",
+          "reason": "After-action reviews are mandatory for Sev 1 within 10 business days, but only encouraged for Sev 2, so the Sev 2 half of the requirement is not met.",
+          "evidence": "After-action reviews are required for Sev 1 incidents and must be completed within ten (10) business days of closure. After-action reviews for Sev 2 incidents are encouraged."
+        }
+      }
+    }
+  ]
+}

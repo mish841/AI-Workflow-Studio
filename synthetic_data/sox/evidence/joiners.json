@@ -1,0 +1,26 @@
+{
+  "period": "2026-Q3",
+  "system": "Atlas IAM",
+  "records": [
+    {
+      "ticket": "IAM-2201",
+      "user": "Riley Cho",
+      "role": "Finance analyst",
+      "start_date": "2026-07-08",
+      "manager_approval": "2026-07-07",
+      "iam_approval": "2026-07-07",
+      "access_granted": "2026-07-08",
+      "systems": ["Northstar Hub"]
+    },
+    {
+      "ticket": "IAM-2240",
+      "user": "Sam Okonkwo",
+      "role": "Release engineer",
+      "start_date": "2026-08-19",
+      "manager_approval": "2026-08-18",
+      "iam_approval": null,
+      "access_granted": "2026-08-19",
+      "systems": ["Harbor CI/CD"]
+    }
+  ]
+}

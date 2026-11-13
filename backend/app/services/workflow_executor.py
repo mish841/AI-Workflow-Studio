@@ -17,11 +17,11 @@ def execute_workflow(document_content: str, workflow_instruction: str) -> dict:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise HTTPException(
-            status_code=500,
-            detail="OPENAI_API_KEY is not set.",
+            status_code=503,
+            detail="The language model is not configured on this server.",
         )
 
-    client = OpenAI(api_key=api_key)
+    client = OpenAI(api_key=api_key, timeout=60.0, max_retries=1)
 
     try:
         response = client.responses.parse(
@@ -47,7 +47,7 @@ def execute_workflow(document_content: str, workflow_instruction: str) -> dict:
     except AuthenticationError as exc:
         raise HTTPException(
             status_code=502,
-            detail="OpenAI authentication failed. Check OPENAI_API_KEY.",
+            detail="Language-model authentication failed.",
         ) from exc
     except RateLimitError as exc:
         raise HTTPException(
