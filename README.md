@@ -172,5 +172,3 @@ Backend tests mock the language model for evaluator logic. Retrieval tests use l
 
 Portfolio prototype. Not for production compliance decisions.
 
-<img width="3024" height="1652" alt="image" src="https://github.com/user-attachments/assets/af17b463-37a7-4bed-ade5-d9c21589758a" />
-
